@@ -2,12 +2,23 @@
 Plug 'altercation/vim-colors-solarized'
 
 " Utility
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ihacklog/HiCursorWords'
 Plug 'tpope/vim-sleuth'
+Plug 'nanotech/jellybeans.vim'
+Plug 'terryma/vim-multiple-cursors'
 
 " Syntax Highlighting
 Plug 'vim-scripts/applescript.vim'
 Plug 'elixir-lang/vim-elixir'
+Plug 'ElmCast/elm-vim'
+Plug 'rhysd/vim-crystal'
+Plug 'rust-lang/rust.vim'
+Plug 'jdonaldson/vaxe'
+Plug 'JesseKPhillips/d.vim'
+Plug 'leafgarland/typescript-vim'
+

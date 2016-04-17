@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Exit avoiding this script
+exit
+
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 gem_install_or_update 'terminal-profile-manager'

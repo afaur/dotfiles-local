@@ -4,6 +4,83 @@ export PATH="$HOME/.bin:$HOME/.rbenv/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
-eval "$(rbenv init -)"
+#eval "$(rbenv init -)"
 
+# Source nvm setup
 . ~/.nvm/nvm.sh
+
+# Setup RVM
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Setup Go
+export PATH="$PATH:$HOME/Scratch/GOTESTS/bin" # Add RVM to PATH for scripting
+export GOPATH=/Users/afaur/Scratch/GOTESTS
+
+# Setup Haskell
+export PATH="$HOME/Library/Haskell/bin:$PATH"
+
+# Setup OCaml - OPAM configuration
+. /Users/afaur/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# Debugging cargo issue
+alias cargo-get="while cargo run; do :; done"
+
+# VIM
+alias vim="vim -w ~/vimlog"
+
+# TMUX
+export DISABLE_AUTO_TITLE='true'
+alias tm="tmuxp load ~/tmux.yaml"
+
+# NESH
+alias esrepl="nesh -b -e"
+alias csrepl="nesh -c -e"
+
+# Setup Java (uncomment jdk you want to use)
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+
+# Configure Docker CLI
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/afaur/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
+
+# Find all sym links
+alias symfind="find . -maxdepth 1 -type l -exec echo {} \;"
+
+# Util for quick file extraction
+function extract {
+  if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+  else
+    if [ -f "$1" ] ; then
+        NAME=${1%.*}
+        #mkdir $NAME && cd $NAME
+        case "$1" in
+          *.tar.bz2)   tar xvjf ./"$1"    ;;
+          *.tar.gz)    tar xvzf ./"$1"    ;;
+          *.tar.xz)    tar xvJf ./"$1"    ;;
+          *.lzma)      unlzma ./"$1"      ;;
+          *.bz2)       bunzip2 ./"$1"     ;;
+          *.rar)       unrar x -ad ./"$1" ;;
+          *.gz)        gunzip ./"$1"      ;;
+          *.tar)       tar xvf ./"$1"     ;;
+          *.tbz2)      tar xvjf ./"$1"    ;;
+          *.tgz)       tar xvzf ./"$1"    ;;
+          *.zip)       unzip ./"$1"       ;;
+          *.Z)         uncompress ./"$1"  ;;
+          *.7z)        7z x ./"$1"        ;;
+          *.xz)        unxz ./"$1"        ;;
+          *.exe)       cabextract ./"$1"  ;;
+          *)           echo "extract: '$1' - unknown archive method" ;;
+        esac
+    else
+        echo "'$1' - file does not exist"
+    fi
+  fi
+}
+
+

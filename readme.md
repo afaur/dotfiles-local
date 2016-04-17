@@ -8,6 +8,6 @@ modifications that build on top of the foundation.
 
 ~~~
 git clone git@github.com:thoughtbot/dotfiles.git ~/dotfiles
-git clone git@github.com:blainesch/dotfiles-local.git ~/dotfiles-local
+git clone git@github.com:afaur/dotfiles-local.git ~/dotfiles-local
 env RCRC=$HOME/dotfiles/rcrc rcup
 ~~~

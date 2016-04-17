@@ -1,2 +1,8 @@
+# Setup 'v' to begin selection as in Vim
 bind-key -t vi-copy v begin-selection
 bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+# I want my ctrl keys back!
+bind-key -t vi-edit C-a start-of-line
+bind-key -t vi-edit C-e end-of-line
+

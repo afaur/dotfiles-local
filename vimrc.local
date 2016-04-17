@@ -1,10 +1,24 @@
+colorscheme jellybeans
+highlight Normal guibg=black guifg=white
 set background=dark
-colorscheme solarized
 
 set clipboard=unnamed
 
+" Let nerdtree show hidden files
+let NERDTreeShowHidden=1
+
+" Ctrl + n opens nerdtree
+map <C-n> :NERDTreeToggle<CR>
+map <S-n> :NERDTreeToggle<CR>
+
+" Syntax for scss
+au BufRead,BufNewFile *.less set filetype=scss
+
 " Resize windows when you resize vim
 autocmd VimResized * :wincmd =
+
+" Insert literal tab characters with shift+tab
+inoremap <S-Tab> <C-V><Tab>
 
 " Disable netrw
 let g:loaded_netrw       = 1
@@ -14,23 +28,24 @@ let g:loaded_netrwPlugin = 1
 let g:syntastic_javascript_checkers = ['eslint']
 
 " Work specific
-if (match(system("whoami"), "bschmeisser") != -1)
+""if (match(system("whoami"), "afaur") != -1)
 
   " Project Specific
-  if (match(system("pwd"), "rpm_site") != -1)
+  ""if (match(system("pwd"), "rpm_site") != -1)
     " Use default default ctrlp finder for mega repo
-    unlet g:ctrlp_user_command
-    let g:ctrlp_use_caching = 1
-    let g:ctrlp_lazy_update = 1
-    let g:ctrlp_custom_ignore = {
-      \ 'dir': '\v[\/](\.git|fixtures|node_modules|vendor|tmp|compiled|sandbox|public)$',
-      \ 'file': '\v\.(xml|gif|swf|png|log|tddium|json|css)$'
-      \  }
-  endif
-endif
+    ""unlet g:ctrlp_user_command
+    ""let g:ctrlp_use_caching = 1
+    ""let g:ctrlp_lazy_update = 1
+    ""let g:ctrlp_custom_ignore = {
+    ""  \ 'dir': '\v[\/](\.git|fixtures|node_modules|vendor|tmp|compiled|sandbox|public)$',
+    ""  \ 'file': '\v\.(xml|gif|swf|png|log|tddium|json|css)$'
+    ""  \  }
+  ""endif
+""endif
 
 " Internally ignore spaces when searching
 let g:ctrlp_abbrev = {
       \ 'gmode': 'i',
       \ 'abbrevs': [{'pattern': ' ', 'expanded': '', 'mode': 'pfrz', }]
       \ }
+
