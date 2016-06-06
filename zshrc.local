@@ -1,16 +1,29 @@
 ZSH_THEME="avit"
 export ZSH=$HOME/.oh-my-zsh
-export PATH="$HOME/.bin:$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.bin:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$PATH"
+#export PATH="$HOME/.rbenv/versions/2.3.0/bin:$HOME/.bin:$HOME/.rbenv/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
-#eval "$(rbenv init -)"
+# Add fish like autocompletion
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Source nvm setup
-. ~/.nvm/nvm.sh
+export NVM_DIR="$HOME/.nvm"
+. "$(brew --prefix nvm)/nvm.sh"
+
+# Setup autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # Setup RVM
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Setup RBENV
+eval "$(rbenv init -)"
+
+# Setup RubyMotion SDKs
+export RUBYMOTION_ANDROID_SDK="$HOME/.rubymotion-android/sdk"
+export RUBYMOTION_ANDROID_NDK="$HOME/.rubymotion-android/ndk"
 
 # Setup Go
 export PATH="$PATH:$HOME/Scratch/GOTESTS/bin" # Add RVM to PATH for scripting
