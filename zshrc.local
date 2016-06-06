@@ -1,16 +1,49 @@
-ZSH_THEME="avit"
+# Prompt configuration
+# Modify the prompt to contain git branch name if applicable
+git_info() {
+  current_branch=$(git current-branch 2> /dev/null)
+  if [[ -n $current_branch ]]; then
+    echo " %{$fg_bold[green]%}$current_branch%{$reset_color%}"
+  fi
+}
+
+# Enable prompt substitution
+setopt promptsubst
+
+# Set our prompt substitution
+export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_info) %#'
+
+# Set our zsh theme
+ZSH_THEME="candy"
+
+# Set some var paths for easy access later
 export ZSH=$HOME/.oh-my-zsh
 export PATH="$HOME/.bin:$HOME/.rbenv/bin:$PATH"
 
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Set zshell custom dir
+ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
+
+# Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
-#eval "$(rbenv init -)"
+# rbenv setup
+eval "$(rbenv init -)"
 
 # Source nvm setup
 . ~/.nvm/nvm.sh
 
 # Setup RVM
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Setup jenv for managing java versions
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Autojump / Fish / Ack
+[[ -f ~/.addon-config.local ]] && source ~/.addon-config.local
 
 # Setup Go
 export PATH="$PATH:$HOME/Scratch/GOTESTS/bin" # Add RVM to PATH for scripting
@@ -37,7 +70,7 @@ alias esrepl="nesh -b -e"
 alias csrepl="nesh -c -e"
 
 # Setup Java (uncomment jdk you want to use)
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
 #export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
 #export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 

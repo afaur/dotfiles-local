@@ -1,0 +1,8 @@
+# Ack
+alias ack="ack -i"
+
+# Add autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# Add Fish like autosuggestions
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
