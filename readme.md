@@ -1,13 +1,12 @@
 ## Local Dotfiles
 
-I use [thoughtbot/dotfiles](https://github.com/thoughtbot/dotfiles) as the
-foundation of my personal configuration. These files are the `.local`
-modifications that build on top of the foundation.
+If you are considering using this please fork the two repos below.
+After forking them use your fork when you clone for simplicity.
 
 ## Install
 
 ~~~
-git clone git@github.com:thoughtbot/dotfiles.git ~/dotfiles
+git clone git@github.com:afaur/base-dotfiles.git ~/dotfiles
 git clone git@github.com:afaur/dotfiles-local.git ~/dotfiles-local
-env RCRC=$HOME/dotfiles/rcrc rcup
+env RCRC=$HOME/dotfiles-local/rcrc rcup
 ~~~
