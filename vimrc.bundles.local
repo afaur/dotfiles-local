@@ -21,4 +21,4 @@ Plug 'rust-lang/rust.vim'
 Plug 'jdonaldson/vaxe'
 Plug 'JesseKPhillips/d.vim'
 Plug 'leafgarland/typescript-vim'
-
+Plug 'pangloss/vim-javascript'

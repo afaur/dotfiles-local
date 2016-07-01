@@ -7,15 +7,44 @@ source $ZSH/oh-my-zsh.sh
 # Add fish like autocompletion
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# Elixir
+alias mi='mix deps.get'
+alias mu='mix local.hex'
+
+alias mpn='mix phoenix.new'
+alias mpnw='mix phoenix.new --no-brunch'
+alias mpnv='mix phoenix.new -v'
+
+alias ms='mix phoenix.server'
+alias mgm='mix phoenix.gen.model'
+
+alias mec='mix ecto.create'
+alias mem='mix ecto.migrate'
+
+# DO NOT INSTALL NVM USING BREW
+# BC: https://github.com/creationix/nvm/issues/856
+
 # Source nvm setup
-export NVM_DIR="$HOME/.nvm"
-. "$(brew --prefix nvm)/nvm.sh"
+export NVM_DIR="/Users/afaur/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Quickly npm install with nvm exec checker
+alias ni='nvm use && npm install'
+
+# Quickly npm run with nvm exec checker
+alias nr='nvm use && npm run'
 
 # Setup autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # Setup RBENV
 eval "$(rbenv init -)"
+
+# Quickly bundle install
+alias bi='bundle install'
+
+# Instead of installing binstubs, alias be to be bundle exec
+alias be='bundle exec'
 
 # Alias irb to pry.  If pry is not installed then run irb.
 alias irb='pry 2> /dev/null && return 0 || irb'
