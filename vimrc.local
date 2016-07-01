@@ -2,7 +2,9 @@
 let mapleader = " "
 
 syntax on
-colorscheme solarized
+colorscheme jellybeans
+
+highlight Normal guibg=black guifg=white
 
 set nowrap
 set clipboard=unnamed " Use system clipboard

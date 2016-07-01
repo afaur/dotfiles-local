@@ -3,24 +3,35 @@ call plug#begin('~/.vim/plugged')
 " Theme
 Plug 'altercation/vim-colors-solarized'
 
+" Base
+Plug 'scrooloose/syntastic'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'pmsorhaindo/syntastic-local-eslint.vim'
+Plug 'fatih/vim-go'
+
 " Utility
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ihacklog/HiCursorWords'
 Plug 'tpope/vim-sleuth'
-Plug 'pmsorhaindo/syntastic-local-eslint.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'terryma/vim-multiple-cursors'
 
 " Syntax Highlighting
 Plug 'vim-scripts/applescript.vim'
 Plug 'elixir-lang/vim-elixir'
-
-" From dotfiles
-Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'fatih/vim-go'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+Plug 'ElmCast/elm-vim'
+Plug 'rhysd/vim-crystal'
+Plug 'rust-lang/rust.vim'
+Plug 'jdonaldson/vaxe'
+Plug 'JesseKPhillips/d.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
 
 call plug#end()

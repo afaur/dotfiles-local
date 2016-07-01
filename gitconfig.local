@@ -1,6 +1,6 @@
 [user]
-  name = Blaine Schmeisser
-  email = blainesch@gmail.com
+  name = Adam Faur
+  email = adam.faur@gmail.com
 [alias]
   aa = add --all
   ap = add --patch
@@ -12,7 +12,7 @@
   lg = log --stat --summary --show-signature
   cleanup = !git fetch origin && git reset --hard origin/`git rev-parse --abbrev-ref HEAD`
   open = !vim -p `git show --pretty="format:" --name-only HEAD`
-  work = config user.email "bschmeisser@newrelic.com"
+  work = config user.email "adam.faur@vitals.com"
   fixup = commit --fixup
   squash = commit --squash
   review = !sh -c 'reflog-review'
@@ -35,6 +35,6 @@
   smudge = git-lfs smudge %f
   required = true
 [user]
-  signingkey = 8D515E0C
+  signingkey = FCF52B19
 [commit]
   gpgsign = true
