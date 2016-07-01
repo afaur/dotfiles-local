@@ -1,3 +1,5 @@
+~~~
+
 ## Install GPG and Keybase
 
 ~~~
@@ -16,7 +18,7 @@ gpg --gen-key
 This is useful if you have a work email you also commit as.
 
 ~~~
-gpg --edit-key blainesch@gmail.com
+gpg --edit-key my_email@some_site.com
 ~~~
 
 In the GPG shell:
@@ -30,7 +32,7 @@ adduid
 Give your public key to Github.
 
 ~~~
-gpg --armor --export blainesch@gmail.com
+gpg --armor --export my_email@some_site.com
 ~~~
 
 ## Add GPG key to Keybase
@@ -46,7 +48,7 @@ keybase pgp select
 I imported this into [1password](https://1password.com/features/). Skip this if you this is managed by keybase.
 
 ~~~
-gpg --export-secret-key -a blainesch@gmail.com > gpg-private.key
+gpg --export-secret-key -a my_email@some_site.com > gpg-private.key
 ~~~
 
 ## Import Private Key into GPG
@@ -59,7 +61,7 @@ gpg --allow-secret-key-import --import gpg-private.key
 
 ## Signing GIT Commits
 
-To obtain your key (for me this was `8D515E0C`), run the following and look for
+To obtain your key, run the following and look for
 "sec:" which stands for "secret key".
 
 You'll see it in the following format: `length/KEY creation_date`.
@@ -68,11 +70,12 @@ You'll see it in the following format: `length/KEY creation_date`.
 gpg --list-secret-keys
 ~~~
 
-Then, add these lines to your `~/.gitconfig`
+Then, add these lines to your `~/.gitconfig` changing MY_KEY to the key
+that you determined in the last step.
 
 ~~~
 [user]
-  signingkey = 8D515E0C
+  signingkey = MY_KEY
 [commit]
   gpgsign = true
 ~~~
@@ -80,6 +83,6 @@ Then, add these lines to your `~/.gitconfig`
 Or use the command line
 
 ~~~
-git config --global user.signingkey 8D515E0C
+git config --global user.signingkey MY_KEY
 git config --global commit.gpgsign true
 ~~~

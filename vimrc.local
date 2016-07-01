@@ -83,3 +83,20 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 " Mouse support
 set mouse=a
+
+" Let nerdtree show hidden files
+let NERDTreeShowHidden=1
+
+" Ctrl + n opens nerdtree
+map <C-n> :NERDTreeToggle<CR>
+map <S-n> :NERDTreeToggle<CR>
+
+" Syntax for scss
+au BufRead,BufNewFile *.less set filetype=scss
+
+" Internally ignore spaces when searching
+let g:ctrlp_abbrev = {
+      \ 'gmode': 'i',
+      \ 'abbrevs': [{'pattern': ' ', 'expanded': '', 'mode': 'pfrz', }]
+      \ }
+
