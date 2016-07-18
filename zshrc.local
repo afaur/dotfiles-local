@@ -42,6 +42,13 @@ eval "$(rbenv init -)"
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
+# Make jruby use drip
+# https://github.com/ninjudd/drip/wiki/JRuby
+export JAVACMD=$(which drip)
+export DRIP_INIT_CLASS=org.jruby.main.DripMain
+export DRIP_INIT=""
+export JRUBY_OPTS="-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-noverify" 
+
 # Autojump / Fish / Ack
 [[ -f ~/.addon-config.local ]] && source ~/.addon-config.local
 
@@ -55,11 +62,15 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 # Setup OCaml - OPAM configuration
 . /Users/afaur/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
+# ls replacement exa
+alias l="exa --git --long -h"
+
 # Debugging cargo issue
 alias cargo-get="while cargo run; do :; done"
 
 # VIM
-alias vim="vim -w ~/vimlog"
+alias v="vim -w ~/vimlog"
+alias v.="vim -w ~/vimlog ."
 
 # TMUX
 export DISABLE_AUTO_TITLE='true'
@@ -69,16 +80,38 @@ alias tm="tmuxp load ~/tmux.yaml"
 alias esrepl="nesh -b -e"
 alias csrepl="nesh -c -e"
 
-# Setup Java (uncomment jdk you want to use)
-#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home
-#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
-#export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+# Setup docker machine settings for default
+eval $(docker-machine env default)
 
 # Configure Docker CLI
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="/Users/afaur/.docker/machine/machines/default"
-export DOCKER_MACHINE_NAME="default"
+function dvm {
+  if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: dvm machine"
+    echo "The following docker machines are setup on your system:"
+    docker-machine ls
+  else
+    # Start the machine
+    docker-machine start "$1" > /dev/null 2> /dev/null || true
+
+    # See if we can get the env for that machine
+    eval "$(docker-machine env $1)" > /dev/null 2> /dev/null || true
+
+    # Run command by itself to check if ran successfully
+    docker-machine env $1 > /dev/null 2> /dev/null
+
+    if [ $? -ne 0 ]; then
+      echo "Machine doesn't exist"
+    else
+      echo "You are now controlling machine: $1"
+      echo "Any docker commands you run will be against that machine."
+    fi
+
+  fi
+}
+
+# Setup default docker
+dvm default
 
 # Find all sym links
 alias symfind="find . -maxdepth 1 -type l -exec echo {} \;"

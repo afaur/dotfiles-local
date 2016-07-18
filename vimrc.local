@@ -2,6 +2,8 @@ colorscheme jellybeans
 highlight Normal guibg=black guifg=white
 set background=dark
 
+" Mouse support
+set mouse=a
 set clipboard=unnamed
 
 " Let nerdtree show hidden files
