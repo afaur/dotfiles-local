@@ -90,8 +90,8 @@ set mouse=a
 " Let nerdtree show hidden files
 let NERDTreeShowHidden=1
 
-" Alt + t opens nerdtree
-nnoremap <M-n> :NERDTreeToggle<CR>
+" gn opens nerdtree
+nnoremap gn :NERDTreeToggle<CR>
 
 " bn and bp for buffer movements
 nnoremap bn :bn<CR>
@@ -109,9 +109,9 @@ while c <= 99
   let c += 1
 endwhile
 
-" Alt + x for buffer destruction
-nnoremap <M-x> :bw<CR>
-nnoremap <M-X> :bw!<CR>
+" gx and gX for buffer destruction
+nnoremap gx :bw<CR>
+nnoremap gX :bw!<CR>
 
 " Syntax for scss
 au BufRead,BufNewFile *.less set filetype=scss
