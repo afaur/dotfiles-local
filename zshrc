@@ -1,18 +1,3 @@
-# Prompt configuration
-# Modify the prompt to contain git branch name if applicable
-git_info() {
-  current_branch=$(git current-branch 2> /dev/null)
-  if [[ -n $current_branch ]]; then
-    echo " %{$fg_bold[green]%}$current_branch%{$reset_color%}"
-  fi
-}
-
-# Enable prompt substitution
-setopt promptsubst
-
-# Set our prompt substitution
-export PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_info) %#'
-
 # Set our zsh theme
 ZSH_THEME="candy"
 
@@ -22,8 +7,85 @@ export ZSH=~/.oh-my-zsh
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
+# Make `which` find lookup tree
+alias which='which -a'
+
+# Finds the first true lookup (a non aliased lookup)
+# You can add a second arg to it like --version or -v
+function __dowhich {
+  tcmd="$(which $1 | sed -n '2p' | tr -d '\n')"
+  "$tcmd" "$2"
+}
+
+alias dowhich='__dowhich'
+
+# -- Begin Prompt configuration --
+
+# Colors - Color White, etc
+export CB=$'%{$fg[blue]%}'
+export CBB=$'%{$fg_bold[blue]%}'
+export CBG=$'%{$fg_bold[green]%}'
+export CW=$'%{$fg[white]%}'
+
+# Reset
+export RS=$'%{$reset_color%}'
+
+# Newline
+export NL=$'\n'
+
+# Modify the prompt to contain git branch name if applicable
+git_info() {
+  current_branch=$(git current-branch 2> /dev/null)
+  if [[ -n $current_branch ]]; then
+    echo " ${CBG}${current_branch}${RS}"
+  fi
+}
+
+# Enable prompt substitution
+setopt promptsubst
+
+# Executed before each prompt print
+precmd() {
+  # Where Local and Where Remote
+  export WL=$'%{$fg_bold[green]%}[LOCAL] '
+  export WR=$'%{$fg_bold[green]%}%n@%m '
+
+  # Datetime print
+  export DT=$'%D{[%X]} '
+
+  # Folder print
+  export FP=$'[%3/] '
+
+  # Git Prompt print
+  export GP=$'$(git_prompt_info) '
+
+  # Command Prompt
+  export CP="${CB}->${CBB} %# ${RS}"
+
+  # Main Prompt
+  export MP="${CB}${DT}${RS}${GP}${NL}${CW}${FP}${NL}${CP}"
+}
+
+# If we are on our own computer show [LOCAL]
+remote_vs_local_display () {
+  if [[ ${(%):-%m} = "Adams-MBP" ]]; then
+    PS1="${WL}${MP}"
+  else
+    PS1="${WR}${MP}"
+  fi
+}
+
+# Enable precmd functions
+typeset -a precmd_functions
+precmd_functions+=(remote_vs_local_display)
+
+# -- End Prompt configuration --
+
 # Enable fish like autocompletion and git plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Enable emscripten
+#source "$HOME/SDKs/emsdk_portable/emsdk_env.sh"
 
 # Add Android sdk tools to path
 export PATH="$HOME/.bin:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools:$PATH"
@@ -40,11 +102,14 @@ export PATH="/usr/local/sbin:$PATH"
 # Add /usr/local/bin to path
 export PATH="/usr/local/bin:$PATH"
 
+# Add php 5.6 to path
+export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
+
 # Add any .bin binaries to path
 export PATH="$HOME/.bin:$PATH"
 
 # Needed for the Nix installer
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
+#if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 
 # Elixir
 alias mi='mix deps.get'
@@ -117,7 +182,9 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 alias cargo-get="while cargo run; do :; done"
 
 # VIM
-alias vim="vim -w ~/vimlog"
+alias myvim="/usr/local/Cellar/macvim/7.4-106/MacVim.app/Contents/MacOS/Vim"
+alias vim="myvim -w ~/vimlog"
+alias v="vim"
 
 # TMUX
 export DISABLE_AUTO_TITLE='true'

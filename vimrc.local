@@ -24,6 +24,9 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
+" Insert literal tab characters with shift+tab
+inoremap <S-Tab> <Space>
+
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
 
@@ -87,9 +90,28 @@ set mouse=a
 " Let nerdtree show hidden files
 let NERDTreeShowHidden=1
 
-" Ctrl + n opens nerdtree
-map <C-n> :NERDTreeToggle<CR>
-map <S-n> :NERDTreeToggle<CR>
+" Alt + t opens nerdtree
+nnoremap <M-n> :NERDTreeToggle<CR>
+
+" bn and bp for buffer movements
+nnoremap bn :bn<CR>
+nnoremap bp :bp<CR>
+
+" gb and gB for buffer movements
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+
+" The following lets you type #gb
+" Typing 12gb would jump to buffer 12.
+let c = 1
+while c <= 99
+  execute "nnoremap " . c . "gb :" . c . "b\<CR>"
+  let c += 1
+endwhile
+
+" Alt + x for buffer destruction
+nnoremap <M-x> :bw<CR>
+nnoremap <M-X> :bw!<CR>
 
 " Syntax for scss
 au BufRead,BufNewFile *.less set filetype=scss
@@ -99,4 +121,57 @@ let g:ctrlp_abbrev = {
       \ 'gmode': 'i',
       \ 'abbrevs': [{'pattern': ' ', 'expanded': '', 'mode': 'pfrz', }]
       \ }
+
+" Makes it to where vim without . will still open nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" -- Start Enable buffer file display in vim-airline --
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+" -- End Enable buffer file display in vim-airline --
+
+" Add tab numbers
+if has('gui')
+  set guioptions-=e
+endif
+if exists("+showtabline")
+  function MyTabLine()
+    let s = ''
+    let t = tabpagenr()
+    let i = 1
+    while i <= tabpagenr('$')
+      let buflist = tabpagebuflist(i)
+      let winnr = tabpagewinnr(i)
+      let s .= '%' . i . 'T'
+      let s .= (i == t ? '%1*' : '%2*')
+      let s .= ' ' . i
+      let s .= ' %*'
+      let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+      let bufnr = buflist[winnr - 1]
+      let file = bufname(bufnr)
+      let buftype = getbufvar(bufnr, 'buftype')
+      if buftype == 'nofile'
+        if file =~ '\/.'
+          let file = substitute(file, '.*\/\ze.', '', '')
+        endif
+      else
+        let file = fnamemodify(file, ':p:t')
+      endif
+      if file == ''
+        let file = '[No Name]'
+      endif
+      let s .= file
+      let i = i + 1
+    endwhile
+    let s .= '%T%#TabLineFill#%='
+    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+    return s
+  endfunction
+  set stal=2
+  set tabline=%!MyTabLine()
+endif
 
