@@ -90,16 +90,23 @@ set mouse=a
 " Let nerdtree show hidden files
 let NERDTreeShowHidden=1
 
-" gn opens nerdtree
-nnoremap gn :NERDTreeToggle<CR>
+" Fix buffer delete nerdtree
+function! g:WorkaroundNERDTreeToggle()
+  try | NERDTreeToggle | catch | silent! NERDTree | endtry
+endfunction
 
-" bn and bp for buffer movements
-nnoremap bn :bn<CR>
-nnoremap bp :bp<CR>
+" ge opens nerdtree
+nnoremap ge :call g:WorkaroundNERDTreeToggle()<CR>
 
 " gb and gB for buffer movements
 nnoremap gb :bn<CR>
 nnoremap gB :bp<CR>
+
+" Reload vimrc file inplace
+nnoremap rv :so $MYVIMRC<CR>
+
+" Allow empty files to have template set
+let g:templates_empty_files = 1
 
 " The following lets you type #gb
 " Typing 12gb would jump to buffer 12.
@@ -133,45 +140,3 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 " -- End Enable buffer file display in vim-airline --
-
-" Add tab numbers
-if has('gui')
-  set guioptions-=e
-endif
-if exists("+showtabline")
-  function MyTabLine()
-    let s = ''
-    let t = tabpagenr()
-    let i = 1
-    while i <= tabpagenr('$')
-      let buflist = tabpagebuflist(i)
-      let winnr = tabpagewinnr(i)
-      let s .= '%' . i . 'T'
-      let s .= (i == t ? '%1*' : '%2*')
-      let s .= ' ' . i
-      let s .= ' %*'
-      let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-      let bufnr = buflist[winnr - 1]
-      let file = bufname(bufnr)
-      let buftype = getbufvar(bufnr, 'buftype')
-      if buftype == 'nofile'
-        if file =~ '\/.'
-          let file = substitute(file, '.*\/\ze.', '', '')
-        endif
-      else
-        let file = fnamemodify(file, ':p:t')
-      endif
-      if file == ''
-        let file = '[No Name]'
-      endif
-      let s .= file
-      let i = i + 1
-    endwhile
-    let s .= '%T%#TabLineFill#%='
-    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-    return s
-  endfunction
-  set stal=2
-  set tabline=%!MyTabLine()
-endif
-
