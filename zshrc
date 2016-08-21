@@ -7,6 +7,31 @@ export ZSH=~/.oh-my-zsh
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
+# Add rename tool
+function __rename {
+  if [ -z "$2" ]; then
+    # display usage if no parameters given
+    echo "Usage: rename <from_string> [to_string]"
+    echo "NOTE: to_string param is optional"
+  else
+    # Command that will replace the text
+    trstr="sed -e s/$2/$3/g"
+    # Command that will return an array of files
+    tfary="find . -maxdepth 1 -type f"
+    if [[ $1 == "dry" ]]; then
+      echo "[START DRY RUN]"
+      echo "Actions that would have been ran..."
+      for filename in `eval $tfary`; do echo "mv $filename" "$(echo $filename | eval $trstr)"; done
+      echo "[END DRY RUN]"
+    else
+      for filename in `eval $tfary`; do mv "$filename" "$(echo $filename | eval $trstr)"; done
+    fi
+  fi
+}
+
+alias rename='__rename no_dry'
+alias rename_dry='__rename dry'
+
 # Make `which` find lookup tree
 alias which='which -a'
 
@@ -141,6 +166,7 @@ setnvm() {
    fi
  fi
 }
+
 function cd () { builtin cd "$@" && setnvm; }
 
 # Quickly npm install with nvm exec checker
