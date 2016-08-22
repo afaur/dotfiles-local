@@ -22,7 +22,7 @@ Plug 'ihacklog/HiCursorWords'
 Plug 'tpope/vim-sleuth'
 Plug 'nanotech/jellybeans.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'afaur/vim-templates'
+Plug 'ap/vim-templates'
 
 " Syntax Highlighting
 Plug 'vim-scripts/applescript.vim'
