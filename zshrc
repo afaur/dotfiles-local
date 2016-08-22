@@ -15,16 +15,20 @@ function __rename {
     echo "NOTE: to_string param is optional"
   else
     # Command that will replace the text
-    trstr="sed -e s/$2/$3/g"
+    replace_string="sed -e s/$2/$3/g"
     # Command that will return an array of files
-    tfary="find . -maxdepth 1 -type f"
+    file_array="find . -maxdepth 1 -type f"
     if [[ $1 == "dry" ]]; then
       echo "[START DRY RUN]"
       echo "Actions that would have been ran..."
-      for filename in `eval $tfary`; do echo "mv $filename" "$(echo $filename | eval $trstr)"; done
+      for filename in `eval $file_array`; do
+        echo "mv $filename" "$(echo $filename | eval $replace_string)"
+      done
       echo "[END DRY RUN]"
     else
-      for filename in `eval $tfary`; do mv "$filename" "$(echo $filename | eval $trstr)"; done
+      for filename in `eval $file_array`; do
+        mv "$filename" "$(echo $filename | eval $replace_string)"
+      done
     fi
   fi
 }
