@@ -7,6 +7,16 @@ export ZSH=~/.oh-my-zsh
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
+# Allow for key repeat hjkl inside macvim
+# defaults write org.vim.MacVim ApplePressAndHoldEnabled false
+# defaults write org.vim.MacVim.LSSharedFileList ApplePressAndHoldEnabled false
+
+# Empty trash since mac shortcut doesn't work
+alias tempty="sudo rm -rf ~/.Trash/*"
+
+# In terminal quick open sys pref
+alias spref="open 'x-apple.systempreferences:'"
+
 # Add rename tool
 function __rename {
   if [ -z "$2" ]; then
