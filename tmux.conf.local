@@ -1,8 +1,25 @@
 # Setup 'v' to begin selection as in Vim
-bind-key -t vi-copy v begin-selection
-bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+# bind-key -t vi-copy v begin-selection
+# bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
 
 # I want my ctrl keys back!
-bind-key -t vi-edit C-a start-of-line
-bind-key -t vi-edit C-e end-of-line
+# bind-key -t vi-edit C-a start-of-line
+# bind-key -t vi-edit C-e end-of-line
 
+# leader
+set -g prefix2 C-s
+
+# soften status bar color from harsh green to light gray
+set -g status-bg '#666666'
+set -g status-fg '#aaaaaa'
+
+# Mouse support
+set -g mouse on
+
+# Always use the current directory
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+# Copy
+bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"

@@ -2,6 +2,9 @@ colorscheme jellybeans
 highlight Normal guibg=black guifg=white
 set background=dark
 
+" Change font size
+set guifont=Monaco:h20
+
 " Mouse support
 set mouse=a
 set clipboard=unnamed
@@ -29,25 +32,46 @@ let g:loaded_netrwPlugin = 1
 " ESLint
 let g:syntastic_javascript_checkers = ['eslint']
 
-" Work specific
-""if (match(system("whoami"), "afaur") != -1)
-
-  " Project Specific
-  ""if (match(system("pwd"), "rpm_site") != -1)
-    " Use default default ctrlp finder for mega repo
-    ""unlet g:ctrlp_user_command
-    ""let g:ctrlp_use_caching = 1
-    ""let g:ctrlp_lazy_update = 1
-    ""let g:ctrlp_custom_ignore = {
-    ""  \ 'dir': '\v[\/](\.git|fixtures|node_modules|vendor|tmp|compiled|sandbox|public)$',
-    ""  \ 'file': '\v\.(xml|gif|swf|png|log|tddium|json|css)$'
-    ""  \  }
-  ""endif
-""endif
-
 " Internally ignore spaces when searching
 let g:ctrlp_abbrev = {
       \ 'gmode': 'i',
       \ 'abbrevs': [{'pattern': ' ', 'expanded': '', 'mode': 'pfrz', }]
       \ }
 
+" Let nerdtree show hidden files
+let NERDTreeShowHidden=1
+
+" gn opens nerdtree
+nnoremap gn :NERDTreeToggle<CR>
+
+" bn and bp for buffer movements
+nnoremap bn :bn<CR>
+nnoremap bp :bp<CR>
+
+" gb and gB for buffer movements
+nnoremap gb :bn<CR>
+nnoremap gB :bp<CR>
+
+" gx and gX for buffer deletions
+nnoremap gx :bw<CR>
+nnoremap gX :bw!<CR>
+
+" The following lets you type #gb
+" Typing 12gb would jump to buffer 12.
+let c = 1
+while c <= 99
+  execute "nnoremap " . c . "gb :" . c . "b\<CR>"
+  let c += 1
+endwhile
+
+" Makes it to where vim without . will still open nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" -- Start Enable buffer file display in vim-airline --
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+" -- End Enable buffer file display in vim-airline --

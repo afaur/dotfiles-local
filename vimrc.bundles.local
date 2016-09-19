@@ -11,6 +11,7 @@ Plug 'ihacklog/HiCursorWords'
 Plug 'tpope/vim-sleuth'
 Plug 'nanotech/jellybeans.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'benmills/vimux'
 
 " Syntax Highlighting
 Plug 'vim-scripts/applescript.vim'
@@ -22,3 +23,5 @@ Plug 'jdonaldson/vaxe'
 Plug 'JesseKPhillips/d.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'raichoo/purescript-vim'
+Plug 'afaur/vim-typings'
+Plug 'Shougo/unite.vim'
